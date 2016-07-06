@@ -1,2 +1,87 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+
+body {
+  font-family: 'Prompt', sans-serif;
+  z-index: -1;
+}
+
+.landing{
+    position: relative;
+    background: no-repeat url('http://www.win10themes.com/wp-content/uploads/2016/03/Wallpaper-Weather.jpg') 50% / 100%;
+    z-index: 0;
+}
+
+.landing img{
+    position: aboslute;
+    vertical-align: top;
+    width: 100%; /* max width */
+    opacity: 0;  /* make it transparent */
+    z-index: -1;
+}
+
+.jumbotron {
+  z-index: 5;
+  position: absolute;
+  background-color: rgba(224,224,224,.5);
+  width: 80%;
+  margin-top: 10%;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+.current-weather-media-object {
+  color: white;
+  background-color: black;
+  border: 1px white solid;
+  margin-top: 5%;
+  margin-left: 30%;
+  margin-right: 30%;
+}
+
+.card {
+  color: white;
+  background-color: black;
+  border: 1px white solid;
+  min-height: 300px;
+}
+
+.current-weather-media-object img {
+  max-width: 150px;
+  width: auto;
+  height: auto;
+  margin-left: 25%;
+  margin-top: 25%;
+}
+
+.media-body {
+  padding-left: 10%;
+  font-size: 1em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.card-img-top {
+  max-width: 60%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.card-title{
+  font-size: 1em;
+}
+
+.card-text{
+  font-size: .85em;
+}
+
+.media-heading {
+  font-size: 2em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#forecast-results {
+  margin-top: 10%;
+}

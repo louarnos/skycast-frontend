@@ -1,0 +1,15 @@
+{{#each forecast}}
+  <div class="card col-md-2">
+    <h4 class="card-title">{{this.time}}</h4>
+    <img class="card-img-top" src={{this.icon}}>
+    <div class="card-block">
+      <p class="card-text">
+        {{this.summary}}<br>
+        Max Temp: {{this.temperatureMax}} <br>
+        Min Temp: {{this.temperatureMin}} <br>
+        Max Temp Will Feel Like {{this.apparentTemperatureMax}} <br>
+        Min Temp Will Feel Like {{this.apparentTemperatureMin}} <br>
+      </p>
+    </div>
+  </div>
+{{/each}}
