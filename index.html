@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <title>Example</title>
+      <title>Skycast Inc.</title>
 
       <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
       <script src="vendor.bundle.js" type="text/javascript" charset="utf-8" defer></script>
       <script src="bundle.js" type="text/javascript" charset="utf-8" defer></script>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     </head>
     <body class="container-fluid">
       <nav class="navbar navbar-default">
@@ -36,46 +37,32 @@
         </div>
         <img src="http://www.win10themes.com/wp-content/uploads/2016/03/Wallpaper-Weather.jpg"><!-- I'm invisible! yey!-->
       </div>
-      <!--<div class='map-container'>
-        <div id="map"></div>
+
+
+      <label class='search-label'> Get A Forecast By Locaton</label>
+      <div class="input-group location-search">
+        <input type="text" class="form-control" id="location-search-input" placeholder="Enter a location" aria-describedby="basic-addon2">
+        <span class="input-group-addon" id="basic-addon2"><button type='click' id="location-search-btn" class='btn btn-primary'>Get Forecast</button></span>
       </div>
 
-      <script>
-        var map;
-        function initMap() {
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 5
-          });
-        }
-      </script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDUf3G1Yp17sPRUxvyfpwhTqmt7urONmg&callback=initMap"
-      async defer>
-    </script> -->
+      <div class="col-md-4 col-md-offset-4 date-picker">
+        <label>Get Data From:</label>
+        <input type="date" id="forecast-start-date">
+        <br>
+        <label>To:</label>
+        <input type="date" id="forecast-end-date">
+        <br>
+        <button type='click' id="historical-location-search-btn" class='btn btn-primary'>Get Historical Data</button>
+      </div>
 
+      <div id="multiple-search-results" class="list-group">
+      </div>
 
-    <label class='search-label'> Get A Forecast By Locaton</label>
-    <div class="input-group location-search">
-      <input type="text" class="form-control" id="location-search-input" placeholder="Enter a location" aria-describedby="basic-addon2">
-      <span class="input-group-addon" id="basic-addon2"><button type='click' id="location-search-btn" class='btn btn-primary'>Get Forecast</button></span>
-    </div>
+      <div id="chart-div">
+      </div>
 
-    <div class="col-md-4 col-md-offset-4 date-picker">
-      <label>Get Data From:</label>
-      <input type="date" id="forecast-start-date">
-      <br>
-      <label>To:</label>
-      <input type="date" id="forecast-end-date">
-      <br>
-      <button type='click' id="historical-location-search-btn" class='btn btn-primary'>Get Historical Data</button>
-    </div>
-
-    <div id="multiple-search-results" class="list-group">
-    </div>
-
-
-    <div id="forecast-results">
-    </div>
+      <div id="forecast-results">
+      </div>
 
 
 

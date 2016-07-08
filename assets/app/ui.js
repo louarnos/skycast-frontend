@@ -6,6 +6,7 @@ const currentWeatherTemp = require('../templates/current-weather.handlebars');
 const forecastTemp = require('../templates/forecast.handlebars');
 const multipleResultsTemp = require('../templates/multiple-results.handlebars');
 const historicalMultipleResultsTemp = require('../templates/historical-request-multiple-results.handlebars');
+const googleCharts = require('./google-charts.js');
 const moment = require('moment');
 
 const getForecastSuccess = (data) => {
@@ -112,6 +113,8 @@ const getHistoricalDataSuccess = (data) =>{
     app.results = data.locations.results;
     $('#multiple-search-results').html('<h4 class="multiple-search-results-heading">Your search results for "' + app.query + '" had multiple results. <br>Choose which youd like to see.</h4>');
     $('#multiple-search-results').append(historicalMultipleResultsTemp({result}));
+  }else {
+    googleCharts.drawTempChart(data);
   }
 };
 
