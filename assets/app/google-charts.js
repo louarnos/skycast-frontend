@@ -9,7 +9,6 @@ function drawTempChart(response) {
 
   response.results.forEach(function(day){
     let dayArray = [];
-    day = JSON.parse(day);
     dayArray.push(new Date(Number(day.daily.data[0].time)*1000));
     dayArray.push(day.daily.data[0].temperatureMax);
     dayArray.push(day.daily.data[0].temperatureMin);

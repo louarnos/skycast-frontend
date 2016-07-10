@@ -13,20 +13,13 @@ body {
   z-index: 0;
 }
 
-#map {
-  height: 100%;
-  display:block;
-  overflow:auto;
-  margin-left: 10%;
-  margin-right: 10%;
-}
 
 .location-search {
   width: 50%;
   margin: 0 auto;
 }
 
-#multiple-search-results {
+#search-results {
   width: 50%;
   margin: 0 auto;
   margin-top: 5%;
@@ -40,6 +33,8 @@ body {
   color: white;
 }
 
+
+
 .historical-multiple-results-list {
   background-color: black;
   color: white;
@@ -47,7 +42,7 @@ body {
 
 .search-label{
   padding-top: 5%;
-  margin-right: 50%;
+  // margin-right: 50%;
   width: 100%;
   text-align: center;
 }
@@ -57,9 +52,9 @@ body {
 }
 
 .date-picker{
-  width: 60%;
-  margin-right: 30%;
-  margin-top: 5%;
+  width: 50%;
+  margin-top: 1%;
+  margin-right: 20%;
   margin-bottom: 5%;
 }
 
@@ -77,9 +72,10 @@ body {
 #chart-div{
   width: 100%;
   height: 500px;
+  clear: both;
 }
 
-.landing img{
+.landing img {
     position: aboslute;
     vertical-align: top;
     width: 100%; /* max width */

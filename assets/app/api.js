@@ -50,6 +50,28 @@ const saveQuery = (success, failure, data) => {
     .fail(failure);
 };
 
+const getQueries = (success, failure) => {
+  $.ajax({
+    method: 'GET',
+    url: app.api + '/query/',
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+  }).done(success)
+    .fail(failure);
+};
+
+const saveHistoricalQuery = (success, failure, data) => {
+  $.ajax({
+    method: 'POST',
+    url: app.api + '/historical-query/',
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+  }).done(success)
+    .fail(failure);
+};
+
 
 
 module.exports = {
@@ -57,4 +79,6 @@ module.exports = {
   getNonLocalForecast,
   getHistoricalData,
   saveQuery,
+  getQueries,
+  saveHistoricalQuery,
 };

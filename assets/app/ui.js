@@ -6,89 +6,43 @@ const currentWeatherTemp = require('../templates/current-weather.handlebars');
 const forecastTemp = require('../templates/forecast.handlebars');
 const multipleResultsTemp = require('../templates/multiple-results.handlebars');
 const historicalMultipleResultsTemp = require('../templates/historical-request-multiple-results.handlebars');
+const displayQueriesTemp = require('../templates/display-queries.handlebars');
 const googleCharts = require('./google-charts.js');
-const moment = require('moment');
 
 const getForecastSuccess = (data) => {
+
+  //IF MORE THAN ONE RESULTS FOR LOCATIONS FROM SERVER
+  // DISPLAY SO USER CAN CHOOSE WHICH LOCATION THEY WANT
   if(data.results) {
     let result = data.results;
     app.results = data.results;
     $('#multiple-search-results').html('<h4 class="multiple-search-results-heading">Your search results for "' + app.query + '" had multiple results. <br>Choose which youd like to see.</h4>');
     $('#multiple-search-results').append(multipleResultsTemp({result}));
   }else{
-    if(data.currently.icon === 'clear-day'){
-      data.currently.icon = "assets/weather-icons/weezle_sun.png"
-    }else if(data.currently.icon === 'clear-night'){
-      data.currently.icon = "assets/weather-icons/weezle_fullmoon.png"
-    }else if(data.currently.icon === 'rain'){
-      data.currently.icon = "assets/weather-icons/weezle_rain.png"
-    }else if(data.currently.icon === 'snow'){
-      data.currently.icon = "assets/weather-icons/weezle_snow.png"
-    }else if(data.currently.icon === 'sleet'){
-      data.currently.icon = "assets/weather-icons/weezle_medium_ice.png"
-    }else if(data.currently.icon === 'wind'){
-      data.currently.icon = "assets/weather-icons/weezle_fog.png"
-    }else if(data.currently.icon === 'fog'){
-      data.currently.icon = "assets/weather-icons/weezle_fog.png"
-    }else if(data.currently.icon === 'cloudy'){
-      data.currently.icon = "assets/weather-icons/weezle_cloud.png"
-    }else if(data.currently.icon === 'partly-cloudy-day'){
-      data.currently.icon = "assets/weather-icons/weezle_sun_minimal_clouds.png"
-    }else if(data.currently.icon === 'partly-cloudy-night'){
-      data.currently.icon = "assets/weather-icons/weezle_moon_cloud.png"
-    }
-    data.currently.temperature = Math.round(data.currently.temperature);
-    data.currently.apparentTemperature = Math.round(data.currently.apparentTemperature);
 
-    for(let i = 0; i < data.daily.data.length; i++) {
-      if(data.daily.data[i].icon === 'clear-day'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_sun.png";
-      }else if(data.daily.data[i].icon === 'clear-night'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_fullmoon.png";
-      }else if(data.daily.data[i].icon === 'rain'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_rain.png";
-      }else if(data.daily.data[i].icon === 'snow'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_snow.png";
-      }else if(data.daily.data[i].icon === 'sleet'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_medium_ice.png";
-      }else if(data.daily.data[i].icon === 'wind'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_fog.png";
-      }else if(data.daily.data[i].icon === 'fog'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_fog.png";
-      }else if(data.daily.data[i].icon === 'cloudy'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_cloud.png";
-      }else if(data.daily.data[i].icon === 'partly-cloudy-day'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_sun_minimal_clouds.png";
-      }else if(data.daily.data[i].icon === 'partly-cloudy-night'){
-        data.daily.data[i].icon = "assets/weather-icons/weezle_moon_cloud.png";
-      }
-      let dateModified = moment().add(i, 'days').format('LLLL');
-      let tokens = dateModified.split(' ').slice(0, 4);
-      dateModified = tokens.join(' ');
-      data.daily.data[i].time = dateModified;
-      data.daily.data[i].apparentTemperatureMax = Math.round(data.daily.data[i].apparentTemperatureMax);
-      data.daily.data[i].temperatureMax = Math.round(data.daily.data[i].temperatureMax);
-      data.daily.data[i].apparentTemperatureMin = Math.round(data.daily.data[i].apparentTemperatureMin);
-      data.daily.data[i].temperatureMin = Math.round(data.daily.data[i].temperatureMin);
-
-      let date = new Date(data.daily.data[i].apparentTemperatureMaxTime*1000);
-      console.log(date);
-
-    }
-
-    data.currently.time = moment().format('LLLL');
+    //FORMAT DATA FOR PRESENTATION
+    data = formatForecast(data);
+    data.currently.location = app.query;
     console.log(data);
     let currentWeather = data.currently;
     let forecast = data.daily.data;
 
+
+    //SCROLL TO FORECAST DISPLAY
     $('html, body').animate({
       scrollTop: $("#forecast-results").offset().top
     }, 1000);
 
+
+    //DISPLAY FORECAST
     $('#forecast-results').html('');
     $('#forecast-results').append(currentWeatherTemp({currentWeather}));
     $('#forecast-results').append(forecastTemp({forecast}));
 
+    //SAVE DATA THAT WAS SUCCESSFULLY RETRIEVED TO THE SERVER
+    appApi.saveQuery(saveQuerySuccess, saveQueryFailure, {'response': data,
+                                                          'identifier': 'not historical',
+                                                          'location': app.query});
   }
 };
 
@@ -108,17 +62,43 @@ const getHistoricalDataSuccess = (data) =>{
   console.log(data);
   app.startDate = data.startDate;
   app.endDate = data.endDate;
+
+  // IF MULTIPLE RESULTS FROM SERVER DISPLAY SO USER CAN CHOOSE DESIRED LOCATION
   if(data.locations) {
+    console.log('more than one result');
     let result = data.locations.results;
     app.results = data.locations.results;
-    $('#multiple-search-results').html('<h4 class="multiple-search-results-heading">Your search results for "' + app.query + '" had multiple results. <br>Choose which youd like to see.</h4>');
-    $('#multiple-search-results').append(historicalMultipleResultsTemp({result}));
+    $('#multiple-historical-search-results').html('<h4 class="multiple-search-results-heading">Your search results for "' + app.query + '" had multiple results. <br>Choose which youd like to see.</h4>');
+    $('#multiple-historical-search-results').append(historicalMultipleResultsTemp({result}));
   }else {
+    // OTHERWISE GRAPH DATA
+    $('#chart-div').removeClass('hidden');
     googleCharts.drawTempChart(data);
+
+    let identifier = guid();
+    data.results.forEach(function(query){
+      appApi.saveQuery(saveQuerySuccess,
+                       saveQueryFailure,
+                       {'response': query,
+                        'identifier': identifier,
+                        'location': app.query});
+    });
   }
 };
 
 const getHistoricalDataFailure = (data) =>{
+  console.log(data);
+};
+
+const success = (data) =>{
+  console.log(data);
+  data = consolidateQueries(data);
+  console.log(data);
+
+  $('#queries-table > tbody').append(displayQueriesTemp({data}));
+};
+
+const failure = (data) =>{
   console.log(data);
 };
 
@@ -129,4 +109,6 @@ module.exports = {
   saveQueryFailure,
   getHistoricalDataSuccess,
   getHistoricalDataFailure,
+  success,
+  failure,
 };

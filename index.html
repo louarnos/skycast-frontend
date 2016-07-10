@@ -33,36 +33,83 @@
         <div class="jumbotron">
           <h1>SkyCast Inc.</h1>
           <p>The Forecast Is A Click Away</p>
-          <a class="btn btn-primary btn-lg" href="#" role="button" id="jumbotron-btn">Get Your Forecast</a>
+          <a class="btn btn-primary btn-lg" href="#" role="button" id="jumbotron-btn">Get Your Local Forecast</a>
         </div>
         <img src="http://www.win10themes.com/wp-content/uploads/2016/03/Wallpaper-Weather.jpg"><!-- I'm invisible! yey!-->
       </div>
 
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#current-forecast">Get A Current Forecast</a></li>
+        <li><a data-toggle="tab" href="#menu1">Get Historical Data</a></li>
+        <li><a data-toggle="tab" href="#menu2">See Your Previous Queries</a></li>
+      </ul>
 
-      <label class='search-label'> Get A Forecast By Locaton</label>
-      <div class="input-group location-search">
-        <input type="text" class="form-control" id="location-search-input" placeholder="Enter a location" aria-describedby="basic-addon2">
-        <span class="input-group-addon" id="basic-addon2"><button type='click' id="location-search-btn" class='btn btn-primary'>Get Forecast</button></span>
+      <div class="tab-content">
+        <div id="current-forecast" class="tab-pane fade in active">
+
+          <label class='search-label'> Get A Current Forecast By Location</label>
+          <div class="input-group location-search">
+            <input type="text" class="form-control" id="location-search-input" placeholder="Enter a location" aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2"><button type='click' id="location-search-btn" class='btn btn-primary'>Get Forecast</button></span>
+          </div>
+
+          <div id="multiple-search-results" class="list-group">
+          </div>
+
+          <div id="forecast-results">
+          </div>
+
+        </div>
+        <div id="menu1" class="tab-pane fade">
+
+          <label class='search-label'> Get Historical Data By Location</label>
+          <div class="input-group location-search">
+            <input type="text" class="form-control" id="historical-location-search-input" placeholder="Enter a location" aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2"><button type='click' id="historical-location-search-btn" class='btn btn-primary'>Get Historical Data</button></span>
+          </div>
+
+          <div class="col-md-4 col-md-offset-4 date-picker">
+            <label>Get Data From:</label>
+            <input type="date" id="forecast-start-date">
+            <label>To:</label>
+            <input type="date" id="forecast-end-date">
+          </div>
+
+
+
+          <div id="multiple-historical-search-results" class="list-group">
+          </div>
+
+          <div id="chart-div" class="hidden">
+          </div>
+
+        </div>
+        <div id="menu2" class="tab-pane fade">
+          <table class="table table-inverse" id="queries-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Query made on:</th>
+                <th>Location</th>
+                <th>Coordinates of this location</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div class="col-md-4 col-md-offset-4 date-picker">
-        <label>Get Data From:</label>
-        <input type="date" id="forecast-start-date">
-        <br>
-        <label>To:</label>
-        <input type="date" id="forecast-end-date">
-        <br>
-        <button type='click' id="historical-location-search-btn" class='btn btn-primary'>Get Historical Data</button>
-      </div>
 
-      <div id="multiple-search-results" class="list-group">
-      </div>
 
-      <div id="chart-div">
-      </div>
 
-      <div id="forecast-results">
-      </div>
+
+
+
+
+
+
+
 
 
 

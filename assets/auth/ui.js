@@ -2,6 +2,8 @@
 
 const app = require('../app-data.js');
 const authApi = require('./api.js');
+const appApi = require('../app/api.js');
+const appUi = require('../app/ui.js');
 
 const signOutSuccess = (data) => {
   console.log('signed-out', data);
@@ -23,6 +25,7 @@ const signInSuccess = (data) => {
   $('#li-sign-in').addClass('hidden');
   $('#li-sign-out').removeClass('hidden');
   $('#li-change-pw').removeClass('hidden');
+  appApi.getQueries(appUi.success, appUi.failure);
 };
 
 const changePWSuccess = (data) => {
