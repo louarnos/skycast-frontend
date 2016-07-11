@@ -1,17 +1,10 @@
 {{#each data}}
-
   {{#if this._id}}
     <tr>
       <td>Current Forecast</td>
       <td>{{this.createdAt}}</td>
       <td>{{this.location}}</td>
       <td>Latitude: {{this.response.latitude}}  Longitude: {{this.response.longitude}}</td>
-    </tr>
-  {{else}}
-    <tr>
-      <td>Historical Data</td>
-      <td>Otto</td>
-      <td>@mdo</td>
     </tr>
   {{/if}}
 {{/each}}

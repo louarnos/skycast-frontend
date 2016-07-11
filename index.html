@@ -7,6 +7,7 @@
       <script src="vendor.bundle.js" type="text/javascript" charset="utf-8" defer></script>
       <script src="bundle.js" type="text/javascript" charset="utf-8" defer></script>
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script src="https://use.fontawesome.com/8a7b90ba63.js"></script>
     </head>
     <body class="container-fluid">
       <nav class="navbar navbar-default">
@@ -17,13 +18,11 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign In/Sign Up <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li id="li-sign-in"><a href="#" data-toggle="modal" data-target="#signInModal">Sign In</a></li>
                   <li id="li-sign-up"><a href="#" data-toggle="modal" data-target="#signUpModal">Sign Up</a></li>
-                  <li id="li-sign-out" class="hidden"><a href="#" id="sign-out">Sign Out</a></li>
-                  <li id="li-change-pw" class="hidden"><a href="#">Change Password</a></li>
-                </ul>
+                  <li id="li-sign-out" class="hidden"><a href="#" id="sign-out">Sign Out</a></li>                </ul>
               </li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -34,6 +33,9 @@
           <h1>SkyCast Inc.</h1>
           <p>The Forecast Is A Click Away</p>
           <a class="btn btn-primary btn-lg" href="#" role="button" id="jumbotron-btn">Get Your Local Forecast</a>
+          <p class='hidden pulse' id="local-forecast-loading-notification">One moment while we load your request...</p>
+          <p class='hidden warning' id="jumbotron-sign-in-notification">You Must Be Signed In To Do That</p>
+
         </div>
         <img src="http://www.win10themes.com/wp-content/uploads/2016/03/Wallpaper-Weather.jpg"><!-- I'm invisible! yey!-->
       </div>
@@ -41,7 +43,7 @@
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#current-forecast">Get A Current Forecast</a></li>
         <li><a data-toggle="tab" href="#menu1">Get Historical Data</a></li>
-        <li><a data-toggle="tab" href="#menu2">See Your Previous Queries</a></li>
+        <li><a data-toggle="tab" id='menu2-tab' href="#menu2">See Your Previous Queries</a></li>
       </ul>
 
       <div class="tab-content">
@@ -52,11 +54,16 @@
             <input type="text" class="form-control" id="location-search-input" placeholder="Enter a location" aria-describedby="basic-addon2">
             <span class="input-group-addon" id="basic-addon2"><button type='click' id="location-search-btn" class='btn btn-primary'>Get Forecast</button></span>
           </div>
+          <p class='warning hidden' id="non-local-forecast-sign-in-notification">You must be signed in to do that.</p>
+
+
 
           <div id="multiple-search-results" class="list-group">
           </div>
 
           <div id="forecast-results">
+          </div>
+          <div id="extended-forecast-results">
           </div>
 
         </div>
@@ -69,11 +76,13 @@
           </div>
 
           <div class="col-md-4 col-md-offset-4 date-picker">
-            <label>Get Data From:</label>
-            <input type="date" id="forecast-start-date">
-            <label>To:</label>
+            <label for="forecast-start-date">Get Data From:</label><br>
+            <input type="date" id="forecast-start-date"><br>
+            <label for="forecast-end-date">To:</label><br>
             <input type="date" id="forecast-end-date">
           </div>
+          <p class='warning hidden' id="historical-query-sign-in-notification">You must be signed in to do that.</p>
+          <p class='warning hidden' id="historical-query-invalid-data-notification">Please be sure to fill in all the information for the query.</p>
 
 
 
@@ -99,6 +108,9 @@
           </table>
         </div>
       </div>
+      <footer>
+        <a href="https://github.com/louarnos" target="_blank"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a>
+      </footer>
 
 
 

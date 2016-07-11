@@ -9,8 +9,15 @@ const addHandlers = () => {
   // USER REQUESTS LOCAL FORECAST
   $('#jumbotron-btn').on('click', function(event){
     event.preventDefault();
-
-
+    console.log(!app.user);
+    if(!app.user){
+      $('#jumbotron-sign-in-notification').removeClass('hidden');
+      setTimeout(function(){
+        $('#jumbotron-sign-in-notification').addClass('hidden');
+      }, 2000);
+      return;
+    }
+    $('#local-forecast-loading-notification').removeClass('hidden');
 
     //GET USER POSITION
     getPosition()
@@ -29,6 +36,13 @@ const addHandlers = () => {
   //USER REQUESTS CURRENT FORECAST FOR NONLOCAL POSITION
   $('#location-search-btn').on('click', function(event){
     event.preventDefault();
+    if(!app.user){
+      $('#non-local-forecast-sign-in-notification').removeClass('hidden');
+      setTimeout(function(){
+        $('#non-local-forecast-sign-in-notification').addClass('hidden');
+      }, 2000);
+      return;
+    }
 
     //GET USER INPUT
     app.query = $('#location-search-input').val();
@@ -90,6 +104,19 @@ const addHandlers = () => {
   //TRACKS FOR HISTORICAL SEARCH CLICK
   $('#historical-location-search-btn').on('click', function(event){
     event.preventDefault();
+    if(!app.user){
+      $('#historical-query-sign-in-notification').removeClass('hidden');
+      setTimeout(function(){
+        $('#historical-query-sign-in-notification').addClass('hidden');
+      }, 2000);
+      return;
+    }else if(!$('#forecast-start-date').val()||!$('#forecast-end-date').val()||!$('#historical-location-search-input').val()){
+      $('#historical-query-invalid-data-notification').removeClass('hidden');
+      setTimeout(function(){
+        $('#historical-query-invalid-data-notification').addClass('hidden');
+      }, 2000);
+      return;
+    }
 
     //COLLECTS USER INPUT
     let startDate = new Date($('#forecast-start-date').val());
@@ -108,6 +135,11 @@ const addHandlers = () => {
     appApi.getHistoricalData(appUi.getHistoricalDataSuccess,
                        appUi.getHistoricalDataFailure,
                        data);
+  });
+
+  $('#menu2-tab').on('click', function(event){
+    event.preventDefault();
+    appApi.getQueries(appUi.success, appUi.failure);
   });
 
 };

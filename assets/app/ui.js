@@ -7,7 +7,9 @@ const forecastTemp = require('../templates/forecast.handlebars');
 const multipleResultsTemp = require('../templates/multiple-results.handlebars');
 const historicalMultipleResultsTemp = require('../templates/historical-request-multiple-results.handlebars');
 const displayQueriesTemp = require('../templates/display-queries.handlebars');
+const displayHistoricalQueriesTemp = require('../templates/display-historical-queries.handlebars');
 const googleCharts = require('./google-charts.js');
+const moment = require('moment');
 
 const getForecastSuccess = (data) => {
 
@@ -16,8 +18,13 @@ const getForecastSuccess = (data) => {
   if(data.results) {
     let result = data.results;
     app.results = data.results;
+    $('#non-local-forecast-loading-notification').addClass('hidden');
+    $('#local-forecast-loading-notification').addClass('hidden');
     $('#multiple-search-results').html('<h4 class="multiple-search-results-heading">Your search results for "' + app.query + '" had multiple results. <br>Choose which youd like to see.</h4>');
     $('#multiple-search-results').append(multipleResultsTemp({result}));
+    $('html, body').animate({
+      scrollTop: $("#multiple-search-results").offset().top
+    }, 1000);
   }else{
 
     //FORMAT DATA FOR PRESENTATION
@@ -27,7 +34,8 @@ const getForecastSuccess = (data) => {
     let currentWeather = data.currently;
     let forecast = data.daily.data;
 
-
+    $('#non-local-forecast-loading-notification').addClass('hidden');
+    $('#local-forecast-loading-notification').addClass('hidden');
     //SCROLL TO FORECAST DISPLAY
     $('html, body').animate({
       scrollTop: $("#forecast-results").offset().top
@@ -36,8 +44,9 @@ const getForecastSuccess = (data) => {
 
     //DISPLAY FORECAST
     $('#forecast-results').html('');
-    $('#forecast-results').append(currentWeatherTemp({currentWeather}));
-    $('#forecast-results').append(forecastTemp({forecast}));
+    $('#forecast-results').prepend(currentWeatherTemp({currentWeather}));
+    $('#extended-forecast-results').html('');
+    $('#extended-forecast-results').append(forecastTemp({forecast}));
 
     //SAVE DATA THAT WAS SUCCESSFULLY RETRIEVED TO THE SERVER
     appApi.saveQuery(saveQuerySuccess, saveQueryFailure, {'response': data,
@@ -70,10 +79,17 @@ const getHistoricalDataSuccess = (data) =>{
     app.results = data.locations.results;
     $('#multiple-historical-search-results').html('<h4 class="multiple-search-results-heading">Your search results for "' + app.query + '" had multiple results. <br>Choose which youd like to see.</h4>');
     $('#multiple-historical-search-results').append(historicalMultipleResultsTemp({result}));
+    $('html, body').animate({
+      scrollTop: $('#multiple-historical-search-results').offset().top
+    }, 1000);
   }else {
     // OTHERWISE GRAPH DATA
     $('#chart-div').removeClass('hidden');
     googleCharts.drawTempChart(data);
+
+    $('html, body').animate({
+      scrollTop: $('#chart-div').offset().top
+    }, 1000);
 
     let identifier = guid();
     data.results.forEach(function(query){
@@ -94,7 +110,18 @@ const success = (data) =>{
   console.log(data);
   data = consolidateQueries(data);
   console.log(data);
+  $('#queries-table > tbody').html('');
 
+  let historicalQueries = data.filter(function(query){
+                            return Array.isArray(query);
+                          });
+  historicalQueries.forEach(function(query){
+    query = query[0];
+    query.createdAt = moment(query.createdAt).format('LLLL');
+    $('#queries-table > tbody').append(displayHistoricalQueriesTemp({query}))
+  })
+
+  console.log(historicalQueries);
   $('#queries-table > tbody').append(displayQueriesTemp({data}));
 };
 

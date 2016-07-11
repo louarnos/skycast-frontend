@@ -42,7 +42,7 @@ body {
 
 .search-label{
   padding-top: 5%;
-  // margin-right: 50%;
+  margin-right: 50%;
   width: 100%;
   text-align: center;
 }
@@ -52,9 +52,8 @@ body {
 }
 
 .date-picker{
-  width: 50%;
+  width: 100%;
   margin-top: 1%;
-  margin-right: 20%;
   margin-bottom: 5%;
 }
 
@@ -106,7 +105,7 @@ body {
   color: white;
   background-color: black;
   border: 1px white solid;
-  min-height: 375px;
+  min-height: 500px;
 }
 
 .current-weather-media-object img {
@@ -146,4 +145,71 @@ body {
 
 #forecast-results {
   margin-top: 10%;
+  width: 100%;
+}
+
+#extended-forecast-results {
+  width: 100%;
+  margin-left: 16.3%;
+}
+
+.fa-github {
+  color: black;
+  font-size: 10em;
+  text-align: center;
+  left: 50%;
+  position: relative;;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.warning {
+  margin-top: 5%;
+  color: orange;
+  font-size: 1em;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.pulse {
+   font-size: 0.01em;
+   -webkit-animation: color_change 1s infinite alternate;
+   -moz-animation: color_change 1s infinite alternate;
+   -ms-animation: color_change 1s infinite alternate;
+   -o-animation: color_change 1s infinite alternate;
+   animation: color_change 1s infinite alternate;
+   margin-top: 5%;
+}
+
+@-webkit-keyframes color_change {
+ from { color: #428bca; }
+ to { color: black; }
+}
+@-moz-keyframes color_change {
+ from { color: #428bca; }
+ to { color: black; }
+}
+@-ms-keyframes color_change {
+ from { color: #428bca; }
+ to { color: black; }
+}
+@-o-keyframes color_change {
+ from { color: #428bca; }
+ to { color: black; }
+}
+@keyframes color_change {
+ from { color: #428bca; }
+ to { color: black; }
+}
+
+.fa-github:hover {
+  color: white;
+}
+
+footer{
+  height: 500px;
+  background-color: #428bca;
+  border-top: 3px solid white;
+  clear:both;
 }
